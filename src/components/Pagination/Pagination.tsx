@@ -20,7 +20,7 @@ const Pagination: FC<Props> = ({
   className,
   ...props
 }) => {
-  if (!pagesCount) return null
+  if (pagesCount <= 1) return null
 
   return (
     <div className={cn(className, styles.pagination)} {...props}>

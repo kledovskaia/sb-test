@@ -28,4 +28,14 @@
     font-style: italic;
     list-style-type: none;
   }
+
+  @media screen and (max-width: 40rem) {
+    &__pageButtons {
+      display: none;
+    }
+
+    & > * {
+      flex: 1;
+    }
+  }
 }

@@ -10,7 +10,32 @@
     margin-top: 1.6rem;
   }
 
+  @media screen and (max-width: 40rem) {
+    padding: 4.9rem 0 6.5rem;
+    & > * + * {
+      margin-top: 0;
+    }
+    &__search {
+      position: fixed;
+      z-index: 1;
+      top: 0;
+      right: 0;
+      left: 0;
+    }
+    &__pagination {
+      position: fixed;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      border-top: 0.2rem solid var(--gray);
+      background-color: var(--light);
+    }
+    table {
+      border: 0;
+    }
+  }
+
   &__tableContainer {
-    min-height: 80vh;
+    min-height: 81vh;
   }
 }

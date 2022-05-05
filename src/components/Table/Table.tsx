@@ -43,8 +43,6 @@ const Table: FC<ComponentProps> = ({
   rowsCount = DEFAULT_ROWS_COUNT,
   ...props
 }) => {
-  if (!items.length) return <div className={styles.message}>Нет Постов</div>
-
   return (
     <table className={cn(className, styles.table)} {...props}>
       <thead>
@@ -66,8 +64,8 @@ const Table: FC<ComponentProps> = ({
         </tr>
       </thead>
       <tbody>
-        {items.map(item => (
-          <Row item={item} key={item.id} />
+        {new Array(rowsCount).fill(null).map((_, i) => (
+          <Row item={items?.[i]} key={items?.[i]?.id} />
         ))}
       </tbody>
     </table>

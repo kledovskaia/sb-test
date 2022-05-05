@@ -40,7 +40,7 @@ const App: FC<Props> = ({
       <Loader />
       {isContentShown && (
         <>
-          <Search />
+          <Search className={styles.app__search} />
           <div className={styles.app__tableContainer}>
             <Table />
           </div>
