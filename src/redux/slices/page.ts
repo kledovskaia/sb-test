@@ -1,4 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { setSearch } from '../actions/search'
+import { setSort } from '../actions/sort'
 import * as postThunks from '../thunks/posts'
 
 export const initialState = {
@@ -28,6 +30,12 @@ const page = createSlice({
   extraReducers: builder => {
     builder.addCase(postThunks.fetchPosts.fulfilled, (state, action) => {
       state.pagesCount = Math.ceil(action.payload.length / state.perPage)
+    })
+    builder.addCase(setSort, state => {
+      state.pageNumber = 1
+    })
+    builder.addCase(setSearch, state => {
+      state.pageNumber = 1
     })
   },
 })

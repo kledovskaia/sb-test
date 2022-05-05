@@ -1,7 +1,9 @@
 import { DetailedHTMLProps, FC, HTMLAttributes, memo } from 'react'
 import { connect } from 'react-redux'
-import { RootState } from '../../redux/store'
 import cn from 'classnames'
+
+import { RootState } from '../../redux/store'
+
 import styles from './Error.module.scss'
 
 type Props = ReturnType<typeof mapStateToProps> &

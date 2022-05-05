@@ -1,9 +1,11 @@
 import { DetailedHTMLProps, FC, HTMLAttributes, memo } from 'react'
-import cn from 'classnames'
-import styles from './Pagination.module.scss'
-import { AppDispatch, RootState } from '../../redux/store'
 import { connect } from 'react-redux'
+import cn from 'classnames'
+
+import { AppDispatch, RootState } from '../../redux/store'
 import { nextPage, previousPage, setPage } from '../../redux/slices/page'
+
+import styles from './Pagination.module.scss'
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps> &
@@ -18,6 +20,8 @@ const Pagination: FC<Props> = ({
   className,
   ...props
 }) => {
+  if (!pagesCount) return null
+
   return (
     <div className={cn(className, styles.pagination)} {...props}>
       <button onClick={previousPage} className={styles.pagination__button}>
@@ -45,10 +49,25 @@ const Pagination: FC<Props> = ({
   )
 }
 
-const mapStateToProps = (state: RootState) => ({
-  pagesCount: state.page.pagesCount,
-  pageNumber: state.page.pageNumber,
-})
+const mapStateToProps = (state: RootState) => {
+  const {
+    search: { value: search },
+  } = state
+
+  const items = state.posts.value.filter(item => {
+    const isTitleContain = item.title.replace(/\s+/g, ' ').includes(search)
+    const isBodyContain = item.body.replace(/\s+/g, ' ').includes(search)
+
+    return isTitleContain || isBodyContain
+  })
+
+  return {
+    pagesCount: !search
+      ? state.page.pagesCount
+      : Math.ceil(items.length / state.page.perPage),
+    pageNumber: state.page.pageNumber,
+  }
+}
 
 const mapDispatchToProps = (dispatch: AppDispatch) => ({
   setPage: (page: InferArgType<typeof setPage>) => {

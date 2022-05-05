@@ -1,16 +1,20 @@
 import { FC, HTMLAttributes, DetailedHTMLProps, useEffect } from 'react'
+import { connect } from 'react-redux'
 import cn from 'classnames'
-import styles from './styles/App.module.scss'
+
 import Search from './components/Search/Search'
 import Pagination from './components/Pagination/Pagination'
 import Table from './components/Table/Table'
-import { fetchPosts } from './redux/thunks/posts'
-import { connect } from 'react-redux'
-import { AppDispatch, RootState } from './redux/store'
-import { setPage } from './redux/slices/page'
-import { usePageRouting } from './hooks/usePageRouting'
 import Loader from './components/Loader/Loader'
 import Error from './components/Error/Error'
+
+import { AppDispatch, RootState } from './redux/store'
+import { fetchPosts } from './redux/thunks/posts'
+import { setPage } from './redux/slices/page'
+
+import { usePageRouting } from './hooks/usePageRouting'
+
+import styles from './styles/App.module.scss'
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps> &
@@ -37,7 +41,9 @@ const App: FC<Props> = ({
       {isContentShown && (
         <>
           <Search />
-          <Table />
+          <div className={styles.app__tableContainer}>
+            <Table />
+          </div>
           <Pagination className={styles.app__pagination} />
         </>
       )}

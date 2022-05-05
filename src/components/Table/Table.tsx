@@ -1,12 +1,18 @@
-import { DetailedHTMLProps, FC, TableHTMLAttributes } from 'react'
-import cn from 'classnames'
-import styles from './Table.module.scss'
-import { ReactComponent as ArrowIcon } from '../../assets/arrow-down.svg'
-import { AppDispatch, RootState } from '../../redux/store'
+import { DetailedHTMLProps, FC, memo, TableHTMLAttributes } from 'react'
 import { connect } from 'react-redux'
+import cn from 'classnames'
+
+import { AppDispatch, RootState } from '../../redux/store'
+import { setSort } from '../../redux/actions/sort'
+
 import * as sorts from '../../helpers/sorts'
+
+import { ReactComponent as ArrowIcon } from '../../assets/arrow-down.svg'
 import Row from './Row'
-import { setSort } from '../../redux/slices/sort'
+
+import styles from './Table.module.scss'
+
+const ArrowIconElement = memo(ArrowIcon)
 
 const DEFAULT_ROWS_COUNT = 10
 
@@ -37,6 +43,8 @@ const Table: FC<ComponentProps> = ({
   rowsCount = DEFAULT_ROWS_COUNT,
   ...props
 }) => {
+  if (!items.length) return <div className={styles.message}>Нет Постов</div>
+
   return (
     <table className={cn(className, styles.table)} {...props}>
       <thead>
@@ -45,7 +53,7 @@ const Table: FC<ComponentProps> = ({
             <th key={item.type}>
               <button onClick={() => action({ type: item.type })}>
                 <span>{item.label}</span>
-                <ArrowIcon
+                <ArrowIconElement
                   className={cn({
                     [styles.order]: type === item.type,
                     [styles.order_desc]: item.type === type && order === 'desc',
@@ -70,8 +78,18 @@ const mapStateToProps = ({
   posts: { value: posts },
   sort: { type, order },
   page: { pageNumber: page, perPage },
+  search: { value: search },
 }: RootState) => {
   let items = !type || !order ? posts : [...posts].sort(sorts[type][order])
+
+  if (search) {
+    items = items.filter(item => {
+      const isTitleContain = item.title.replace(/\s+/g, ' ').includes(search)
+      const isBodyContain = item.body.replace(/\s+/g, ' ').includes(search)
+
+      return isTitleContain || isBodyContain
+    })
+  }
   if (page) {
     items = items.slice((page - 1) * perPage, (page - 1) * perPage + perPage)
   }

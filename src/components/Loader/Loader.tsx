@@ -1,10 +1,13 @@
 import { DetailedHTMLProps, FC, HTMLAttributes, memo } from 'react'
-import cn from 'classnames'
-import styles from './Loader.module.scss'
-import { RootState } from '../../redux/store'
 import { connect } from 'react-redux'
+import cn from 'classnames'
+
+import { RootState } from '../../redux/store'
+
+import styles from './Loader.module.scss'
 
 type Props = ReturnType<typeof mapStateToProps> &
+  ReturnType<typeof mapDispatchToProps> &
   DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement>
 
 const Loader: FC<Props> = ({ className, isLoading, ...props }) => {
@@ -16,5 +19,6 @@ const Loader: FC<Props> = ({ className, isLoading, ...props }) => {
 const mapStateToProps = (state: RootState) => ({
   isLoading: state.loading.value,
 })
+const mapDispatchToProps = () => ({})
 
-export default connect(mapStateToProps)(memo(Loader))
+export default connect(mapStateToProps, mapDispatchToProps)(memo(Loader))

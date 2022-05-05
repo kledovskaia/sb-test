@@ -1,19 +1,16 @@
 .app {
-  display: flex;
   width: 110rem;
   max-width: 100vw;
   min-height: 100vh;
-  flex-direction: column;
   padding: 2.3rem;
+  padding-bottom: 1rem;
   margin: 0 auto;
 
   & > * + * {
     margin-top: 1.6rem;
   }
 
-  &__pagination {
-    display: flex;
-    flex: 1;
-    align-items: flex-end;
+  &__tableContainer {
+    min-height: 80vh;
   }
 }

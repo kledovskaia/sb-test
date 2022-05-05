@@ -1,4 +1,5 @@
 .table {
+  width: 100%;
   border: 0.1rem solid var(--gray-light);
   border-top: 0;
   border-collapse: collapse;
@@ -17,6 +18,9 @@
   }
 
   th {
+    overflow: hidden;
+    max-height: 2rem;
+
     button {
       position: relative;
       width: 100%;
@@ -64,11 +68,13 @@
   tr {
     border-top: 0.1rem solid var(--gray-light);
   }
+}
 
-  tr {
-    height: 5.6rem;
-    max-height: fit-content;
-  }
+.message {
+  padding: 5rem;
+  font-size: 2rem;
+  font-weight: 700;
+  text-align: center;
 }
 
 .order {
