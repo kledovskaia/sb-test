@@ -24,10 +24,11 @@ const Search: FC<Props> = ({ className, ...props }) => {
   }, [])
 
   return (
-    <form className={cn(className, styles.search)}>
+    <form className={cn(className, styles.search)} {...props}>
       <input
         className={styles.search__input}
         type="search"
+        placeholder="Поиск"
         value={search}
         onChange={handleChange}
       />

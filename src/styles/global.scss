@@ -1,7 +1,6 @@
 :root {
   --dark: #474955;
-  --light: #fcfcfc;
-  --white: #ffffff;
+  --light: #ffffff;
   --gray: #b2b7bf;
   --gray-dark: #5a5c66;
   --gray-light: #e3e6ec;
@@ -14,6 +13,7 @@ html {
 }
 
 body {
+  color: var(--dark);
   font-family: Roboto, sans-serif;
   font-size: 1.6rem;
 }
@@ -22,4 +22,5 @@ body {
   box-sizing: inherit;
   padding: 0;
   margin: 0;
+  line-height: 1.3769;
 }
