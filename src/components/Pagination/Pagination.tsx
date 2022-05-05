@@ -21,7 +21,7 @@ const Pagination: FC<Props> = ({
   return (
     <div className={cn(className, styles.pagination)} {...props}>
       <button onClick={previousPage} className={styles.pagination__button}>
-        Previous
+        Назад
       </button>
       <ul className={styles.pagination__pageButtons}>
         {new Array(pagesCount).fill(null).map((_, i) => (
@@ -39,7 +39,7 @@ const Pagination: FC<Props> = ({
         ))}
       </ul>
       <button onClick={nextPage} className={styles.pagination__button}>
-        Next
+        Далее
       </button>
     </div>
   )

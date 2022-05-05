@@ -7,8 +7,10 @@ import Table from './components/Table/Table'
 import { fetchPosts } from './redux/thunks/posts'
 import { connect } from 'react-redux'
 import { AppDispatch, RootState } from './redux/store'
-import { useNavigate, useSearchParams } from 'react-router-dom'
 import { setPage } from './redux/slices/page'
+import { usePageRouting } from './hooks/usePageRouting'
+import Loader from './components/Loader/Loader'
+import Error from './components/Error/Error'
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps> &
@@ -18,41 +20,34 @@ const App: FC<Props> = ({
   className,
   pageNumber,
   fetchPosts,
-  isLoading,
-  error,
+  isContentShown,
   setPage,
   ...props
 }) => {
-  const [searchParams] = useSearchParams()
-  const navigate = useNavigate()
+  usePageRouting(pageNumber, setPage)
 
   useEffect(() => {
     fetchPosts()
   }, [])
 
-  useEffect(() => {
-    const page = searchParams.get('page')
-    if (page) setPage(+page)
-    else setPage(1)
-  }, [searchParams, setPage])
-
-  useEffect(() => {
-    if (!pageNumber) return
-    navigate(`/?page=${pageNumber}`)
-  }, [pageNumber, navigate])
-
   return (
     <div className={cn(className, styles.app)} {...props}>
-      <Search />
-      <Table />
-      <Pagination className={styles.app__pagination} />
+      <Error />
+      <Loader />
+      {isContentShown && (
+        <>
+          <Search />
+          <Table />
+          <Pagination className={styles.app__pagination} />
+        </>
+      )}
     </div>
   )
 }
 
 const mapStateToProps = (state: RootState) => ({
-  isLoading: state.posts.isLoading,
-  error: state.posts.error,
+  isContentShown:
+    !!state.posts.value.length && !state.error.value && !state.loading.value,
   pageNumber: state.page.pageNumber,
 })
 
