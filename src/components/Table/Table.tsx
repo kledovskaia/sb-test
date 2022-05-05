@@ -67,17 +67,21 @@ const Table: FC<ComponentProps> = ({
 }
 
 const mapStateToProps = ({
-  posts: { value: items },
+  posts: { value: posts },
   sort: { type, order },
   page: { pageNumber: page, perPage },
-}: RootState) => ({
-  items: (!type || !order ? items : [...items].sort(sorts[type][order])).slice(
-    (page - 1) * perPage,
-    (page - 1) * perPage + perPage,
-  ),
-  type,
-  order,
-})
+}: RootState) => {
+  let items = !type || !order ? posts : [...posts].sort(sorts[type][order])
+  if (page) {
+    items = items.slice((page - 1) * perPage, (page - 1) * perPage + perPage)
+  }
+
+  return {
+    items,
+    type,
+    order,
+  }
+}
 
 const mapDispatchToProps = (dispatch: AppDispatch) => ({
   action: ({ type, order }: Partial<InferArgType<typeof setSort>>) =>
