@@ -8,12 +8,12 @@
     "@testing-library/react": "^13.2.0",
     "@testing-library/user-event": "^14.1.1",
     "@types/jest": "^27.5.0",
-    "@types/node": "^17.0.31",
-    "@types/react": "^18.0.8",
     "@types/react-dom": "^18.0.3",
+    "classnames": "^2.3.1",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
     "react-redux": "^8.0.1",
+    "react-router-dom": "^6.3.0",
     "react-scripts": "5.0.1",
     "typescript": "^4.6.4",
     "web-vitals": "^2.1.4"
@@ -22,7 +22,22 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "checkTs": "tsc --noEmit",
+    "eslint": "eslint --ext ts,tsx",
+    "eslint:fix": "eslint . --fix",
+    "stylelint": "stylelint \"**/*.scss\"",
+    "stylelint:fix": "stylelint \"**/*.scss\" --fix",
+    "prettify": "prettier --write",
+    "prepare": "husky install"
+  },
+  "lint-staged": {
+    "*.{ts,tsx}": [
+      "npm run eslint:fix"
+    ],
+    "*.{md,json}": [
+      "npm run prettify"
+    ]
   },
   "eslintConfig": {
     "extends": [
@@ -41,5 +56,23 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@types/node": "^17.0.31",
+    "@types/react": "^18.0.8",
+    "eslint": "^8.14.0",
+    "eslint-config-next": "12.1.5",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-jsx-a11y": "^6.5.1",
+    "eslint-plugin-prettier": "^4.0.0",
+    "eslint-plugin-react-hooks": "^4.5.0",
+    "husky": "^7.0.0",
+    "lint-staged": "^12.4.1",
+    "postcss-scss": "^4.0.4",
+    "prettier": "^2.6.2",
+    "sass": "^1.51.0",
+    "stylelint": "^14.8.2",
+    "stylelint-config-recommended": "^7.0.0",
+    "stylelint-order": "^5.0.0"
   }
 }
