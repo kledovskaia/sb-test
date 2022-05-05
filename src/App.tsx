@@ -1,30 +1,45 @@
-import { FC, HTMLAttributes, DetailedHTMLProps } from 'react'
+import { FC, HTMLAttributes, DetailedHTMLProps, useEffect } from 'react'
 import cn from 'classnames'
 import styles from './styles/App.module.scss'
 import Search from './components/Search/Search'
 import Pagination from './components/Pagination/Pagination'
 import Table from './components/Table/Table'
+import { fetchPosts } from './redux/thunks/posts'
+import { connect } from 'react-redux'
+import { AppDispatch, RootState } from './redux/store'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 
-type Props = DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement>
+type Props = ReturnType<typeof mapStateToProps> &
+  ReturnType<typeof mapDispatchToProps> &
+  DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement>
 
-const App: FC<Props> = ({ className, ...props }) => {
+const App: FC<Props> = ({
+  className,
+  fetchPosts,
+  isLoading,
+  error,
+  ...props
+}) => {
+  useEffect(() => {
+    fetchPosts()
+  }, [])
+
   return (
     <div className={cn(className, styles.app)} {...props}>
       <Search />
-      <Table
-        className={styles.app__table}
-        items={[
-          {
-            userId: 1,
-            id: 1,
-            title: 'test title',
-            body: 'quia et suscipit\nsuscipit recusandae consequuntur expedita et cum\nreprehenderit molestiae ut ut quas totam\nnostrum rerum est autem sunt rem eveniet architecto',
-          },
-        ]}
-      />
-      <Pagination />
+      <Table />
+      <Pagination className={styles.app__pagination} />
     </div>
   )
 }
 
-export default App
+const mapStateToProps = (state: RootState) => ({
+  isLoading: state.posts.isLoading,
+  error: state.posts.error,
+})
+
+const mapDispatchToProps = (dispatch: AppDispatch) => ({
+  fetchPosts: () => dispatch(fetchPosts()),
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(App)

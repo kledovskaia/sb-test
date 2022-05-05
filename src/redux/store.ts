@@ -1,8 +1,15 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit'
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux'
+import posts from './slices/posts'
+import sort from './slices/sort'
+import page from './slices/page'
 
 export const store = configureStore({
-  reducer: {},
+  reducer: {
+    posts,
+    sort,
+    page,
+  },
 })
 
 export type AppDispatch = typeof store.dispatch

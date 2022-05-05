@@ -12,8 +12,13 @@
     font-weight: 600;
   }
 
+  th + th {
+    min-width: 45%;
+  }
+
   th {
     button {
+      position: relative;
       width: 100%;
       padding: 1.6rem 0.8rem;
       border: 0;
@@ -24,8 +29,22 @@
       font-weight: inherit;
       transition: color 0.1s;
 
+      & > * + * {
+        margin-left: 2.6rem;
+      }
+
       &:hover {
         color: var(--green);
+      }
+
+      svg {
+        position: absolute;
+        top: 45%;
+        opacity: 0;
+
+        &.order {
+          opacity: 1;
+        }
       }
     }
   }
@@ -49,5 +68,13 @@
   tr {
     height: 5.6rem;
     max-height: fit-content;
+  }
+}
+
+.order {
+  &_asc {
+  }
+  &_desc {
+    transform: rotate(180deg);
   }
 }
