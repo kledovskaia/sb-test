@@ -1,19 +1,12 @@
-import {
-  DetailedHTMLProps,
-  FC,
-  TableHTMLAttributes,
-  useCallback,
-  useEffect,
-} from 'react'
+import { DetailedHTMLProps, FC, TableHTMLAttributes } from 'react'
 import cn from 'classnames'
 import styles from './Table.module.scss'
 import { ReactComponent as ArrowIcon } from '../../assets/arrow-down.svg'
 import { AppDispatch, RootState } from '../../redux/store'
-import { setSort } from '../../redux/actions/sort'
 import { connect } from 'react-redux'
 import * as sorts from '../../helpers/sorts'
 import Row from './Row'
-import { useNavigate, useSearchParams } from 'react-router-dom'
+import { setSort } from '../../redux/slices/sort'
 
 const DEFAULT_ROWS_COUNT = 10
 
@@ -41,8 +34,6 @@ const Table: FC<ComponentProps> = ({
   action,
   type,
   order,
-  page,
-  perPage,
   rowsCount = DEFAULT_ROWS_COUNT,
   ...props
 }) => {
@@ -67,7 +58,7 @@ const Table: FC<ComponentProps> = ({
         </tr>
       </thead>
       <tbody>
-        {items.slice(page * perPage, page * perPage + perPage).map(item => (
+        {items.map(item => (
           <Row item={item} key={item.id} />
         ))}
       </tbody>
@@ -80,11 +71,12 @@ const mapStateToProps = ({
   sort: { type, order },
   page: { pageNumber: page, perPage },
 }: RootState) => ({
-  items: !type || !order ? items : [...items].sort(sorts[type][order]),
+  items: (!type || !order ? items : [...items].sort(sorts[type][order])).slice(
+    (page - 1) * perPage,
+    (page - 1) * perPage + perPage,
+  ),
   type,
   order,
-  page,
-  perPage,
 })
 
 const mapDispatchToProps = (dispatch: AppDispatch) => ({

@@ -1,6 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
 import * as thunks from '../thunks/posts'
-import * as pageActions from '../actions/page'
 
 const initialState = {
   value: [] as Post[],
