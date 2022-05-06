@@ -37,6 +37,7 @@ const Search: FC<Props> = ({ className, handleSearch, ...props }) => {
 
   const handleSubmit = useCallback(
     (event: FormEvent<HTMLFormElement>) => {
+      event.preventDefault()
       handleSearch(search)
     },
     [search, handleSearch],

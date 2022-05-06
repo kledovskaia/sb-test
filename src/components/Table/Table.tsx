@@ -65,7 +65,7 @@ const Table: FC<ComponentProps> = ({
       </thead>
       <tbody>
         {new Array(rowsCount).fill(null).map((_, i) => (
-          <Row item={items?.[i]} key={items?.[i]?.id} />
+          <Row item={items?.[i]} key={i} />
         ))}
       </tbody>
     </table>
