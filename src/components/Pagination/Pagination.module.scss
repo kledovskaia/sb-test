@@ -20,6 +20,11 @@
     &_active {
       color: var(--green);
     }
+
+    &_hidden {
+      opacity: 0;
+      pointer-events: none;
+    }
   }
 
   &__pageButtons {

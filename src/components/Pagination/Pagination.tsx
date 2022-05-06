@@ -24,7 +24,12 @@ const Pagination: FC<Props> = ({
 
   return (
     <div className={cn(className, styles.pagination)} {...props}>
-      <button onClick={previousPage} className={styles.pagination__button}>
+      <button
+        onClick={previousPage}
+        className={cn(styles.pagination__button, {
+          [styles.pagination__button_hidden]: pageNumber === 1,
+        })}
+      >
         Назад
       </button>
       <ul className={styles.pagination__pageButtons}>
@@ -42,7 +47,12 @@ const Pagination: FC<Props> = ({
           </li>
         ))}
       </ul>
-      <button onClick={nextPage} className={styles.pagination__button}>
+      <button
+        onClick={nextPage}
+        className={cn(styles.pagination__button, {
+          [styles.pagination__button_hidden]: pageNumber === pagesCount,
+        })}
+      >
         Далее
       </button>
     </div>
